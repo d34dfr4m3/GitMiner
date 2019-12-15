@@ -1,9 +1,5 @@
-[![Python 2.7|3.6](https://img.shields.io/badge/Python-2.7%7C3.6-blue.svg)](https://www.python.org/) [![Gitminer 2.0](https://img.shields.io/badge/Gitminer-2.0-yellow.svg)](https://unkl4b.github.io)
-
-![Screenshot](https://3.bp.blogspot.com/-UvpR_QDDAT0/VtiIc8OKrrI/AAAAAAAAboM/69BNKrvdUsU/s1600/gitminer-628x360.png)
-
 ```
- + Autor: UnK
+ + Autor: UnK 
  + Blog: https://unkl4b.github.io
  + Github: https://github.com/danilovazb
  + Twitter: https://twitter.com/danilo_vaz_
