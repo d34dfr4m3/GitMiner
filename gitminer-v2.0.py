@@ -53,7 +53,6 @@ class GitMiner(object):
         filename = self.args.output
         url_search = self.url + self.search_term
         headers_github = headers.getHeaders(url_search)
-        #print(headers_github)
         content_html = requestPage(url_search, headers_github, self.cookie)
         self.number_page = p.getNumPages(content_html.content)
         print("{YELLOW}+[PAGE: 1/%s]▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬{END}".format(**colors) \

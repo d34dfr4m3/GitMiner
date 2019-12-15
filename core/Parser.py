@@ -14,9 +14,10 @@ class Parser(object):
     def __init__(self):
         # XPATH QUERIES
         self.PAGINATION = '//div[contains(@class, "pagination")]/a/text()'
-        self.URLFILE = '//div[contains(@class, "d-flex")]/div[contains(@class, "flex-auto min-width-0 col-10")]/a[2]/@href'
-        self.LASTINDEXED = '//div[contains(@class, "d-flex")]/div/div[contains(@class, "flex-column")]/span[2]/relative-time/@datetime'
-        self.USER = '//div[contains(@class, "d-flex")]/a[1]/img/@alt'
+        self.URLFILE = '//div[contains(@id, "code_search_results")]//div[contains(@class, "f4 text-normal")]/a/@href'
+        self.LASTINDEXED = '//div[contains(@id, "code_search_results")]/div/div/div/div[contains(@class, "d-flex")]/span[2]/relative-time/@datetime'
+        #self.LASTINDEXED = '//div[contains(@class, "d-flex")]/div/div[contains(@class, "flex-column")]/span[2]/relative-time/@datetime'
+        self.USER = '//div[contains(@id, "code_search_results")]/div/div/img/@alt'
         self.NEXTPAGE = '//a[contains(@class, "next_page")]/@href'
         
         # URL GITHUB
@@ -27,6 +28,7 @@ class Parser(object):
         if filename is not None:
             with open(filename, 'a') as write_file:
                 json.dump(output, write_file)
+                print(output) #DEBUG
                 write_file.write(',')
                 write_file.close()
 
@@ -65,6 +67,7 @@ class Parser(object):
         print("{GREEN}[+]{END} {BLUE}CONTAIN{END}: ".format(**colors))
         for line_contains in content_html.split("\n"):
             if _contains in line_contains:
+                print("Content Line Check")
                 try:
                     line_contains = line_contains.replace(_contains, \
                                     '{BOLD}{RED}%s{END}{ITALIC}' % _contains)
@@ -93,7 +96,7 @@ class Parser(object):
             try:
                 self.parseParameters(content_html, _parameters, _splitparam, _splitorder, user, filename)
             except Exception as inst:
-                #print(inst)
+                print(inst)
                 pass
         
         if regex is not None:
@@ -112,22 +115,23 @@ class Parser(object):
 
     def getSearch(self, content, number_page, headers, cookie, config, filename, regex):
         tree = html.fromstring(content)
-        url_file = tree.xpath(self.URLFILE)
-        last_indexed = tree.xpath(self.LASTINDEXED)
+        url_file = tree.xpath(self.URLFILE) #Vai retornar URLS
         user = tree.xpath(self.USER)
+        last_indexed = tree.xpath(self.LASTINDEXED)
         next_page = tree.xpath(self.NEXTPAGE)
         headers_raw = head.getHeadersRaw()
         for number_url in range(len(url_file)):
             url_code = self.github_raw_url + url_file[number_url].replace("blob/","")
             content_html = requestPage(url_code, headers_raw, cookie)
             content_html = content_html.text
+            print(content_html)
             print("{GREEN}[+]{END} {BLUE}USER{END}: %s".format(**colors) % user[number_url])
             print("{GREEN}[+]{END} {BLUE}LINK{END}: %s\n".format(**colors) % url_code)
             try:
                 print("{GREEN}[+]{END} {BLUE}LAST INDEXED{END}: %s".format(**colors) \
                       % last_indexed[number_url])
             except Exception as inst:
-                #print(inst)
+                print(inst) #DEBUG
                 pass
             self.codeParser(content_html, config, user[number_url], filename, regex)
 

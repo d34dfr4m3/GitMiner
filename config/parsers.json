@@ -49,9 +49,16 @@
     "splitorder":{
     }
   },
-  "passwords":{
+  "credentials":{
     "contains":"password",
     "parameters":{
+      "param1":"username",
+      "param2":"user",
+      "param3":"pass",
+      "param4":"pwd",
+      "param5":"passwd",
+      "param6":"access",
+      "param7":"grant"
     },
     "splitparam":"",
     "splitorder":{
@@ -97,6 +104,23 @@
        "param1":"host",
        "param2":"username",
        "param3":"password"
+    },
+    "splitparam":":",
+    "splitorder":{
+       "order1":"1"
+    }
+  },
+  "aws":{
+   "contains":"aws",
+   "parameters":{
+       "param1":"key",
+       "param2":"token",
+       "param3":"password",
+       "param4":"censys",
+       "param5":"AWS",
+       "param6":"AWS_ACCESS",
+       "param7":"aws_access",
+       "param8":"shodan"
     },
     "splitparam":":",
     "splitorder":{
